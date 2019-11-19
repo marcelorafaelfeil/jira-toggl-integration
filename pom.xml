@@ -15,9 +15,9 @@
     </properties>
 
     <modules>
-        <module>togglCore</module>
+        <module>toggl</module>
         <module>jira</module>
-        <module>jira-togglCore-integration</module>
+        <module>jira-toggl-integration</module>
     </modules>
 
 </project>

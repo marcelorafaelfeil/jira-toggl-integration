@@ -6,10 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="jiratogglintegration" />
+        <module name="jira-toggl-integration" />
         <module name="jira" />
         <module name="toggl" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="jira" target="11" />
+      <module name="jira-integration" target="11" />
+      <module name="jira-toggl-integration" target="11" />
+      <module name="jira-toggl-integration (1)" target="11" />
+      <module name="toggl" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

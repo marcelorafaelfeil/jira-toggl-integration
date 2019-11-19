@@ -9,12 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jira-togglCore-integration</artifactId>
+    <artifactId>jira-toggl-integration</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>marcelorafael.lab</groupId>
-            <artifactId>togglCore</artifactId>
+            <artifactId>toggl</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
