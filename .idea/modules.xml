@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/http-common/http-common.iml" filepath="$PROJECT_DIR$/http-common/http-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/jira/jira.iml" filepath="$PROJECT_DIR$/jira/jira.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jira-integration.iml" filepath="$PROJECT_DIR$/jira-integration.iml" />
       <module fileurl="file://$PROJECT_DIR$/jira-toggl-integration/jira-toggl-integration.iml" filepath="$PROJECT_DIR$/jira-toggl-integration/jira-toggl-integration.iml" />
       <module fileurl="file://$PROJECT_DIR$/toggl/toggl.iml" filepath="$PROJECT_DIR$/toggl/toggl.iml" />
     </modules>

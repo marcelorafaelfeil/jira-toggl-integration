@@ -1,0 +1,7 @@
+
+Dsquid:S1170"!Make this final field static too.(‚ë—Šüÿÿÿÿ8àðˆÿç-
+Psquid:S1172"-Remove this unused method parameter "params".(ýÃ´Ãýÿÿÿÿ8á¡¼€è-
+xsquid:S00116"TRename this field "URL_TOGGL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚ë—Šüÿÿÿÿ8àðˆÿç-
+wsquid:S00116"XRename this field "TOGGL_VERSION" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±×Õç8àðˆÿç-
+?squid:S1170"!Make this final field static too.(±×Õç8àðˆÿç-
+hsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(›Ôì8Ç°ë€è-

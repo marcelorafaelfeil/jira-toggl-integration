@@ -9,9 +9,12 @@
         <module name="jira-toggl-integration" />
         <module name="jira" />
         <module name="toggl" />
+        <module name="http-common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="http" target="11" />
+      <module name="http-common" target="11" />
       <module name="jira" target="11" />
       <module name="jira-integration" target="11" />
       <module name="jira-toggl-integration" target="11" />

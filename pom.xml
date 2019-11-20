@@ -17,6 +17,7 @@
     <modules>
         <module>toggl</module>
         <module>jira</module>
+        <module>http-common</module>
         <module>jira-toggl-integration</module>
     </modules>
 

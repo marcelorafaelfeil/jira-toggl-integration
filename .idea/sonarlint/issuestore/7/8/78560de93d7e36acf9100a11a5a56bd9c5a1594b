@@ -1,0 +1,7 @@
+
+?squid:S1170"!Make this final field static too.(—×¶œ8×¶ÞÍè-
+wsquid:S00116"XRename this field "TOGGL_VERSION" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±×Õç8×¶ÞÍè-
+?squid:S1170"!Make this final field static too.(±×Õç8×¶ÞÍè-
+ssquid:S00116"TRename this field "URL_TOGGL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—×¶œ8×¶ÞÍè-
+nsquid:CommentedOutCodeLineb"<This block of commented-out lines of code should be removed.(‚à’Çüÿÿÿÿ8×¶ÞÍè-
+dsquid:HiddenFieldCheck7";Rename "command" which hides the field declared at line 18.(Èçê¯8×¶ÞÍè-
