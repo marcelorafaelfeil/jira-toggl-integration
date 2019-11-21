@@ -77,26 +77,18 @@ public class JiraCore {
 				.version(HttpClient.Version.HTTP_1_1)
 				.build();
 
-		// Basic bWFyY2Vsby5mZWlsOlF1YWwg6SBvIHNvbT8
-		// Basic bWFyY2Vsby5mZWlsOlF1YWwg6SBvIHNvbT8
 		HttpRequest httpRequest = HttpRequest.newBuilder()
 				.header("Authorization", AuthUtils.generateBasicAuthToken(this.username, this.password))
-				.uri(URI.create(URL_JIRA + "/" + JIRA_VERSION + "/issue/UP-411"))
+				.uri(URI.create(URL_JIRA + "/" + JIRA_VERSION + this.uri))
 				.GET()
 				.build();
 
 		try {
 			HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-			log.info("Enviado com sucesso.  [response={}]", response.body());
+			this.result = response.body();
 		} catch (Exception e) {
 			log.error("Erro ao enviar a requisição.");
 		}
-	}
-
-	private void processReturn(InputStream inputStream) {
-
-
-
 	}
 
 	public String getResultAsString() {

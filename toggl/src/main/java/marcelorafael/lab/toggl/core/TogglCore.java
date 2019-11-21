@@ -1,5 +1,6 @@
 package marcelorafael.lab.toggl.core;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import marcelorafael.lab.httpcommon.HttpMethod;
 import marcelorafael.lab.httpcommon.HttpParams;
@@ -42,7 +43,6 @@ public class TogglCore {
 	private void processRequest() {
 		try {
 			log.info("Executando comando [command={}]", this.command);
-			log.debug("Executando comando [command={}]", this.command);
 			Process process = Runtime.getRuntime().exec(this.command);
 
 			this.processReturn(process.getInputStream());

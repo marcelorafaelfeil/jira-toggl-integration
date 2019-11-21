@@ -3,17 +3,40 @@ package marcelorafael.lab.jiratogglintegration;
 import marcelorafael.lab.httpcommon.HttpMethod;
 import marcelorafael.lab.httpcommon.HttpParams;
 import marcelorafael.lab.httpcommon.URL;
+import marcelorafael.lab.jira.core.JiraConfiguration;
 import marcelorafael.lab.jira.core.JiraCore;
 import marcelorafael.lab.jira.model.JiraIssue;
+import marcelorafael.lab.jira.service.SearchTaskService;
 import marcelorafael.lab.jiratogglintegration.core.ConfigurationProperties;
+import marcelorafael.lab.toggl.core.TogglConfiguration;
 import marcelorafael.lab.toggl.core.TogglCore;
-import marcelorafael.lab.toggl.model.TogglEntries;
+import marcelorafael.lab.toggl.model.TimeEntries;
+import marcelorafael.lab.toggl.service.TogglEntriesService;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.List;
 
 public class JiraToggleIntegrationStart {
 	public static void main(String[] args) {
-		JiraToggleIntegrationStart.jiraTest();
+		TogglConfiguration.TOKEN = ConfigurationProperties.get("toggl.token");
+		JiraConfiguration.USERNAME = ConfigurationProperties.get("jira.username");
+		JiraConfiguration.PASSWORD = ConfigurationProperties.get("jira.password");
+
+		TogglEntriesService togglEntriesServices = new TogglEntriesService();
+		List<TimeEntries> timeEntries = togglEntriesServices.getTimeEntries(LocalDateTime.of(2019, Month.NOVEMBER, 20, 0, 0));
+
+		/*timeEntries.forEach(t -> {
+			int hours = t.getDuration()/3600;
+			int minutes = (t.getDuration()%3600)/60;
+			String time = hours + ":" + minutes;
+			System.out.println("info: "+t.getDescription() + " : " + time);
+		});*/
+
+		SearchTaskService searchTaskService = new SearchTaskService();
+		JiraIssue jiraIssue = searchTaskService.findIssue("UP-411");
+		System.out.println(jiraIssue);
 	}
 
 	public static void togglTest() {
@@ -21,7 +44,7 @@ public class JiraToggleIntegrationStart {
 		TogglCore togglCore = new TogglCore(ConfigurationProperties.get("toggl.api_token"), url, HttpMethod.GET);
 		togglCore.setParameters(new HttpParams().append("since", Instant.now().minusSeconds(500000).getEpochSecond()));
 		togglCore.execute();
-		TogglEntries[] data = togglCore.getResultAsObject(TogglEntries[].class);
+		TimeEntries[] data = togglCore.getResultAsObject(TimeEntries[].class);
 	}
 
 	public static void jiraTest() {
