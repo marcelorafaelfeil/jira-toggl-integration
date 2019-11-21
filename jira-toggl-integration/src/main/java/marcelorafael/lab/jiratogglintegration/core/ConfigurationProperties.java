@@ -15,8 +15,7 @@ public class ConfigurationProperties {
 
 	private static Properties loadProperties() {
 		ConfigurationProperties.props = new Properties();
-		try {
-			FileInputStream file = new FileInputStream("./config/configuration.properties");
+		try(FileInputStream file = new FileInputStream("./config/configuration.properties")) {
 			ConfigurationProperties.props.load(new InputStreamReader(file, Charset.forName(StandardCharsets.UTF_8.displayName())));
 			return ConfigurationProperties.props;
 		} catch (IOException e) {

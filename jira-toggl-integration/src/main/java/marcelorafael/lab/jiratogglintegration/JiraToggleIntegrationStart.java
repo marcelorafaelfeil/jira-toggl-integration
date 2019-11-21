@@ -6,16 +6,17 @@ import marcelorafael.lab.httpcommon.URL;
 import marcelorafael.lab.jira.core.JiraConfiguration;
 import marcelorafael.lab.jira.core.JiraCore;
 import marcelorafael.lab.jira.model.JiraIssue;
+import marcelorafael.lab.jira.payload.CommentPayload;
+import marcelorafael.lab.jira.payload.WorklogPayload;
 import marcelorafael.lab.jira.service.SearchTaskService;
+import marcelorafael.lab.jira.service.WorklogService;
 import marcelorafael.lab.jiratogglintegration.core.ConfigurationProperties;
 import marcelorafael.lab.toggl.core.TogglConfiguration;
 import marcelorafael.lab.toggl.core.TogglCore;
 import marcelorafael.lab.toggl.model.TimeEntries;
 import marcelorafael.lab.toggl.service.TogglEntriesService;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.Month;
+import java.time.*;
 import java.util.List;
 
 public class JiraToggleIntegrationStart {
@@ -35,8 +36,18 @@ public class JiraToggleIntegrationStart {
 		});*/
 
 		SearchTaskService searchTaskService = new SearchTaskService();
-		JiraIssue jiraIssue = searchTaskService.findIssue("UP-411");
-		System.out.println(jiraIssue);
+		/*JiraIssue jiraIssue = searchTaskService.findIssue("UP-411");
+		System.out.println(jiraIssue);*/
+
+		CommentPayload commentPayload = new CommentPayload("Apontamento Toggl.");
+
+		WorklogPayload worklogPayload = new WorklogPayload();
+		worklogPayload.setTimeSpentSeconds((long)120);
+		worklogPayload.setStarted(ZonedDateTime.of(2019, 11, 21, 18, 40, 0, 0, ZoneId.systemDefault()));
+		worklogPayload.setComment("Apontamento Toggl.");
+
+		WorklogService worklogService = new WorklogService();
+		worklogService.addWorklog("UP-195", worklogPayload);
 	}
 
 	public static void togglTest() {

@@ -77,14 +77,19 @@ public class JiraCore {
 				.version(HttpClient.Version.HTTP_1_1)
 				.build();
 
-		HttpRequest httpRequest = HttpRequest.newBuilder()
+		HttpRequest.Builder httpBuilder = HttpRequest.newBuilder()
 				.header("Authorization", AuthUtils.generateBasicAuthToken(this.username, this.password))
+				.header("Content-Type", "application/json")
 				.uri(URI.create(URL_JIRA + "/" + JIRA_VERSION + this.uri))
-				.GET()
-				.build();
+				.method(this.method.name(), HttpRequest.BodyPublishers.ofString(this.params.getParams()));
+
+		HttpRequest httpRequest = httpBuilder.build();
 
 		try {
 			HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+			log.info("URL: {}", URL_JIRA + "/" + JIRA_VERSION + this.uri);
+			log.info("params: {}", this.params.getParams());
+			log.info(response.body());
 			this.result = response.body();
 		} catch (Exception e) {
 			log.error("Erro ao enviar a requisição.");

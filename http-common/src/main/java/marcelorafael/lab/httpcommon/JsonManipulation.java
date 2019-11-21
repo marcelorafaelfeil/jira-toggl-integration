@@ -1,10 +1,8 @@
 package marcelorafael.lab.httpcommon;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +20,14 @@ public class JsonManipulation {
 
 	public static <T> T convertToObject(String json, Class<T> type) {
 		return new Gson().fromJson(json, type);
+	}
+
+	public static String convertObjectToStringJson(Object someObject) {
+		return new GsonBuilder()
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+				.registerTypeAdapter(ZonedDateTimeAdapter.class, new LocalDateTimeAdapter())
+				.create()
+				.toJson(someObject);
 	}
 
 	public static <T> List<T> convertToList(String json, Class<T> type) {

@@ -1,5 +1,8 @@
 package marcelorafael.lab.httpcommon;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+
 public class HttpParams {
 
 	private HttpMethod method;
@@ -7,6 +10,10 @@ public class HttpParams {
 
 	public HttpParams() {
 		this.params = "";
+	}
+
+	public HttpParams(Object someObject) {
+		this.params = JsonManipulation.convertObjectToStringJson(someObject);
 	}
 
 	public void setMethod(HttpMethod method) {
