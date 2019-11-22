@@ -1,17 +1,23 @@
 package marcelorafael.lab.jiratogglintegration.service;
 
 import lombok.extern.slf4j.Slf4j;
-import marcelorafael.lab.jira.model.JiraIssue;
 import marcelorafael.lab.jira.model.ResponseWorklog;
 import marcelorafael.lab.jira.payload.WorklogPayload;
-import marcelorafael.lab.jira.service.SearchTaskService;
 import marcelorafael.lab.jira.service.WorklogService;
-import marcelorafael.lab.jiratogglintegration.utils.TemporalUtil;
 import marcelorafael.lab.jiratogglintegration.core.ConfigurationProperties;
+import marcelorafael.lab.jiratogglintegration.core.ExecutionServices;
+import marcelorafael.lab.jiratogglintegration.utils.TemporalUtil;
 import marcelorafael.lab.jiratogglintegration.utils.TogglUtils;
 import marcelorafael.lab.toggl.model.TimeEntries;
 import marcelorafael.lab.toggl.service.TogglEntriesService;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -24,7 +30,8 @@ public class IntegrationService {
 
 	public void executeIntegration() {
 		LocalDateTime timeToRefresh = LocalDateTime.now();
-		while(true) {
+		this.systemTray();
+		while(!(ExecutionServices.isToClose)) {
 			if (timeToRefresh.isBefore(LocalDateTime.now())) {
 				this.doIntegration();
 
@@ -73,5 +80,42 @@ public class IntegrationService {
 			}
 		}
 		return hasMark;
+	}
+
+	private void systemTray() {
+		if (!SystemTray.isSupported()) {
+			log.warn("System Tray is not supported!");
+			return;
+		}
+
+		final SystemTray tray = SystemTray.getSystemTray();
+
+		Image trayIconImage = Toolkit.getDefaultToolkit().getImage("config/integrator.ico");
+
+		final PopupMenu popupMenu = new PopupMenu();
+		final TrayIcon trayIcon = new TrayIcon(trayIconImage, "Toggl Jira Integration");
+		trayIcon.setImageAutoSize(true);
+
+		// MenuItem aboutItem = new MenuItem("Sobre");
+		MenuItem closeItem = new MenuItem("Fechar");
+		closeItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				ExecutionServices.isToClose = true;
+				System.exit(0);
+			}
+		});
+
+		// popupMenu.add(aboutItem);
+		// popupMenu.addSeparator();
+		popupMenu.add(closeItem);
+
+		trayIcon.setPopupMenu(popupMenu);
+
+		try {
+			tray.add(trayIcon);
+		} catch (AWTException e) {
+			log.error("TrayIcon could not be added.");
+		}
 	}
 }
