@@ -41,7 +41,7 @@ public class IntegrationService {
 						worklogPayload.setStarted(ZonedDateTime.ofInstant(t.getStart().toInstant(), ZoneId.systemDefault()));
 						worklogPayload.setComment("Apontamento integrado Toggl.");
 						worklogPayload.setTimeSpentSeconds(t.getDuration());
-						// worklogService.addWorklog(code, worklogPayload);
+						worklogService.addWorklog(code, worklogPayload);
 						log.info("{} -> APONTADO", t.getDescription());
 					}
 				} else {
