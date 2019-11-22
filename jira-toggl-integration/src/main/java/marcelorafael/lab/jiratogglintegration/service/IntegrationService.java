@@ -48,11 +48,16 @@ public class IntegrationService {
 			if (responseWorklogs != null) {
 				// Se não houver apontamento
 				if (!this.hasMark(responseWorklogs, t)) {
-					WorklogPayload worklogPayload = new WorklogPayload();
-					worklogPayload.setStarted(ZonedDateTime.ofInstant(t.getStart().toInstant(), ZoneId.systemDefault()));
-					worklogPayload.setComment("Apontamento integrado Toggl.");
-					worklogPayload.setTimeSpentSeconds(t.getDuration());
-					worklogService.addWorklog(code, worklogPayload);
+					if(t.getServerDeletedAt() == null) {
+						WorklogPayload worklogPayload = new WorklogPayload();
+						worklogPayload.setStarted(ZonedDateTime.ofInstant(t.getStart().toInstant(), ZoneId.systemDefault()));
+						worklogPayload.setComment("Apontamento integrado Toggl.");
+						worklogPayload.setTimeSpentSeconds(t.getDuration());
+						worklogService.addWorklog(code, worklogPayload);
+						log.info("{} -> APONTADO", t.getDescription());
+					}
+				} else {
+					log.info("{} -> JÁ EXISTE APONTAMENTO", t.getDescription());
 				}
 			}
 		});
@@ -64,7 +69,9 @@ public class IntegrationService {
 			for (int i = 0; i < responseWorklogs.getWorklogs().size(); i++) {
 				ResponseWorklog.Worklog w = responseWorklogs.getWorklogs().get(i);
 				hasMark = TemporalUtil.equalsZoneDateTimeAndDate(w.getStarted(), t.getStart());
-				break;
+				if (hasMark) {
+					break;
+				}
 			}
 		}
 		return hasMark;

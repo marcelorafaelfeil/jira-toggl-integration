@@ -48,7 +48,7 @@ public class TemporalUtil {
 
 	public static Boolean equalsZoneDateTimeAndDate(ZonedDateTime zonedDateTime, Date date) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String zdtString = zonedDateTime.format(formatter);
+		String zdtString = zonedDateTime.withZoneSameInstant(ZoneId.systemDefault()).format(formatter);
 		String ldtString = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).format(formatter);
 
 		return zdtString.equals(ldtString);

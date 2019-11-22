@@ -1,2 +1,3 @@
 config/configuration.properties
 target/
+.idea/
