@@ -11,6 +11,7 @@ import marcelorafael.lab.jira.payload.WorklogPayload;
 import marcelorafael.lab.jira.service.SearchTaskService;
 import marcelorafael.lab.jira.service.WorklogService;
 import marcelorafael.lab.jiratogglintegration.core.ConfigurationProperties;
+import marcelorafael.lab.jiratogglintegration.service.IntegrationService;
 import marcelorafael.lab.toggl.core.TogglConfiguration;
 import marcelorafael.lab.toggl.core.TogglCore;
 import marcelorafael.lab.toggl.model.TimeEntries;
@@ -25,8 +26,11 @@ public class JiraToggleIntegrationStart {
 		JiraConfiguration.USERNAME = ConfigurationProperties.get("jira.username");
 		JiraConfiguration.PASSWORD = ConfigurationProperties.get("jira.password");
 
-		TogglEntriesService togglEntriesServices = new TogglEntriesService();
-		List<TimeEntries> timeEntries = togglEntriesServices.getTimeEntries(LocalDateTime.of(2019, Month.NOVEMBER, 20, 0, 0));
+		IntegrationService integrationService = new IntegrationService();
+		integrationService.doIntegration();
+
+		/*TogglEntriesService togglEntriesServices = new TogglEntriesService();
+		List<TimeEntries> timeEntries = togglEntriesServices.getTimeEntries(LocalDateTime.of(2019, Month.NOVEMBER, 20, 0, 0));*/
 
 		/*timeEntries.forEach(t -> {
 			int hours = t.getDuration()/3600;
@@ -35,19 +39,17 @@ public class JiraToggleIntegrationStart {
 			System.out.println("info: "+t.getDescription() + " : " + time);
 		});*/
 
-		SearchTaskService searchTaskService = new SearchTaskService();
+		// SearchTaskService searchTaskService = new SearchTaskService();
 		/*JiraIssue jiraIssue = searchTaskService.findIssue("UP-411");
 		System.out.println(jiraIssue);*/
 
-		CommentPayload commentPayload = new CommentPayload("Apontamento Toggl.");
-
-		WorklogPayload worklogPayload = new WorklogPayload();
+		/*WorklogPayload worklogPayload = new WorklogPayload();
 		worklogPayload.setTimeSpentSeconds((long)120);
 		worklogPayload.setStarted(ZonedDateTime.of(2019, 11, 21, 18, 40, 0, 0, ZoneId.systemDefault()));
 		worklogPayload.setComment("Apontamento Toggl.");
 
 		WorklogService worklogService = new WorklogService();
-		worklogService.addWorklog("UP-195", worklogPayload);
+		worklogService.addWorklog("UP-195", worklogPayload);*/
 	}
 
 	public static void togglTest() {

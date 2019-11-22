@@ -3,6 +3,7 @@ package marcelorafael.lab.httpcommon;
 import com.google.gson.*;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +20,17 @@ public class JsonManipulation {
 	}
 
 	public static <T> T convertToObject(String json, Class<T> type) {
-		return new Gson().fromJson(json, type);
+		return new GsonBuilder()
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+				.registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
+				.create()
+				.fromJson(json, type);
 	}
 
 	public static String convertObjectToStringJson(Object someObject) {
 		return new GsonBuilder()
 				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-				.registerTypeAdapter(ZonedDateTimeAdapter.class, new LocalDateTimeAdapter())
+				.registerTypeAdapter(ZonedDateTime.class, new ZonedDateTimeAdapter())
 				.create()
 				.toJson(someObject);
 	}

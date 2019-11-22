@@ -17,7 +17,7 @@ public class TogglEntriesService extends TogglService {
 	public List<TimeEntries> getTimeEntries(LocalDateTime since) {
 		HttpParams params = new HttpParams();
 		params.append("since", since.toInstant(ZoneOffset.UTC).getEpochSecond());
-		TimeEntries[] timeEntries = this.run(this.URL, HttpMethod.GET, TimeEntries[].class);
+		TimeEntries[] timeEntries = this.run(this.URL, HttpMethod.GET, params, TimeEntries[].class);
 		return Arrays.asList(timeEntries);
 	}
 }

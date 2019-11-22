@@ -87,10 +87,11 @@ public class JiraCore {
 
 		try {
 			HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-			log.info("URL: {}", URL_JIRA + "/" + JIRA_VERSION + this.uri);
-			log.info("params: {}", this.params.getParams());
-			log.info(response.body());
-			this.result = response.body();
+			if (response.statusCode() == 200) {
+				this.result = response.body();
+				return;
+			}
+			this.result = null;
 		} catch (Exception e) {
 			log.error("Erro ao enviar a requisição.");
 		}

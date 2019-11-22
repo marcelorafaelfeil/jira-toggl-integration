@@ -18,7 +18,7 @@ public class TimeEntries {
 	private Boolean billable;
 	private Date start;
 	private Date stop;
-	private Integer duration;
+	private Long duration;
 	private String description;
 	private Object tags;
 	@SerializedName("tag_ids")
