@@ -40,7 +40,7 @@ public class IntegrationService {
 					worklogPayload.setStarted(ZonedDateTime.ofInstant(t.getStart().toInstant(), ZoneId.systemDefault()));
 					worklogPayload.setComment("Apontamento integrado Toggl.");
 					worklogPayload.setTimeSpentSeconds(t.getDuration());
-					worklogService.addWorklog(code, worklogPayload);
+					// worklogService.addWorklog(code, worklogPayload);
 				}
 			}
 		});
@@ -52,7 +52,9 @@ public class IntegrationService {
 			for (int i = 0; i < responseWorklogs.getWorklogs().size(); i++) {
 				ResponseWorklog.Worklog w = responseWorklogs.getWorklogs().get(i);
 				hasMark = TemporalUtil.equalsZoneDateTimeAndDate(w.getStarted(), t.getStart());
-				break;
+				if (hasMark) {
+					break;
+				}
 			}
 		}
 		return hasMark;
