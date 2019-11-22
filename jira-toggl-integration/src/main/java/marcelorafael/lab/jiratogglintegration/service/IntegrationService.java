@@ -56,8 +56,6 @@ public class IntegrationService {
 						worklogService.addWorklog(code, worklogPayload);
 						log.info("{} -> APONTADO", t.getDescription());
 					}
-				} else {
-					log.info("{} -> JÁ EXISTE APONTAMENTO", t.getDescription());
 				}
 			}
 		});
