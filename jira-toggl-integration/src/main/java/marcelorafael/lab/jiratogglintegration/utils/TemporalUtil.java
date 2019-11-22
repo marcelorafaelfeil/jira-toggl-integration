@@ -50,7 +50,6 @@ public class TemporalUtil {
 		String zdtString = zonedDateTime.withZoneSameInstant(ZoneId.systemDefault()).format(formatter);
 		String ldtString = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).format(formatter);
 
-		log.info("EQUALS => [{} = {}]", zdtString, ldtString);
 		return zdtString.equals(ldtString);
 	}
 }
