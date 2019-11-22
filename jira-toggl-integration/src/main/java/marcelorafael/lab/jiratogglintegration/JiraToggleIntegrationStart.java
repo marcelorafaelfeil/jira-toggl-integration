@@ -12,6 +12,6 @@ public class JiraToggleIntegrationStart {
 		JiraConfiguration.PASSWORD = ConfigurationProperties.get("jira.password");
 
 		IntegrationService integrationService = new IntegrationService();
-		integrationService.doIntegration();
+		integrationService.executeIntegration();
 	}
 }
