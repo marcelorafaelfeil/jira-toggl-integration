@@ -2,6 +2,7 @@ package marcelorafael.lab.jiratogglintegration;
 
 import marcelorafael.lab.jira.core.JiraConfiguration;
 import marcelorafael.lab.jiratogglintegration.core.ConfigurationProperties;
+import marcelorafael.lab.jiratogglintegration.core.SystemTray;
 import marcelorafael.lab.jiratogglintegration.service.IntegrationService;
 import marcelorafael.lab.toggl.core.TogglConfiguration;
 
@@ -11,6 +12,7 @@ public class JiraToggleIntegrationStart {
 		JiraConfiguration.USERNAME = ConfigurationProperties.get("jira.username");
 		JiraConfiguration.PASSWORD = ConfigurationProperties.get("jira.password");
 
+		SystemTray.initialize();
 		IntegrationService integrationService = new IntegrationService();
 		integrationService.executeIntegration();
 	}

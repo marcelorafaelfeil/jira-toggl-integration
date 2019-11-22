@@ -6,11 +6,13 @@ import marcelorafael.lab.jira.payload.WorklogPayload;
 import marcelorafael.lab.jira.service.WorklogService;
 import marcelorafael.lab.jiratogglintegration.core.ConfigurationProperties;
 import marcelorafael.lab.jiratogglintegration.core.ExecutionServices;
+import marcelorafael.lab.jiratogglintegration.core.SystemTray;
 import marcelorafael.lab.jiratogglintegration.utils.TemporalUtil;
 import marcelorafael.lab.jiratogglintegration.utils.TogglUtils;
 import marcelorafael.lab.toggl.model.TimeEntries;
 import marcelorafael.lab.toggl.service.TogglEntriesService;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,16 +28,11 @@ import java.util.List;
 @Slf4j
 public class IntegrationService {
 	private final String SINCE = ConfigurationProperties.get("toggl.since");
-	private final String REFRESH_TIME = ConfigurationProperties.get("integration.refresh-time");
 
 	public void executeIntegration() {
-		LocalDateTime timeToRefresh = LocalDateTime.now();
-		this.systemTray();
 		while(!(ExecutionServices.isToClose)) {
-			if (timeToRefresh.isBefore(LocalDateTime.now())) {
+			if (ExecutionServices.isAllowToSync()) {
 				this.doIntegration();
-
-				timeToRefresh = timeToRefresh.plus(TemporalUtil.getTimeOfUnit(REFRESH_TIME), TemporalUtil.getUnit(REFRESH_TIME));
 			}
 		}
 	}
@@ -60,7 +57,8 @@ public class IntegrationService {
 						worklogPayload.setStarted(ZonedDateTime.ofInstant(t.getStart().toInstant(), ZoneId.systemDefault()));
 						worklogPayload.setComment("Apontamento integrado Toggl.");
 						worklogPayload.setTimeSpentSeconds(t.getDuration());
-						worklogService.addWorklog(code, worklogPayload);
+						// TODO: Descomentar
+						// worklogService.addWorklog(code, worklogPayload);
 						log.info("{} -> APONTADO", t.getDescription());
 					}
 				}
@@ -80,42 +78,5 @@ public class IntegrationService {
 			}
 		}
 		return hasMark;
-	}
-
-	private void systemTray() {
-		if (!SystemTray.isSupported()) {
-			log.warn("System Tray is not supported!");
-			return;
-		}
-
-		final SystemTray tray = SystemTray.getSystemTray();
-
-		Image trayIconImage = Toolkit.getDefaultToolkit().getImage("config/integrator.ico");
-
-		final PopupMenu popupMenu = new PopupMenu();
-		final TrayIcon trayIcon = new TrayIcon(trayIconImage, "Toggl Jira Integration");
-		trayIcon.setImageAutoSize(true);
-
-		// MenuItem aboutItem = new MenuItem("Sobre");
-		MenuItem closeItem = new MenuItem("Fechar");
-		closeItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				ExecutionServices.isToClose = true;
-				System.exit(0);
-			}
-		});
-
-		// popupMenu.add(aboutItem);
-		// popupMenu.addSeparator();
-		popupMenu.add(closeItem);
-
-		trayIcon.setPopupMenu(popupMenu);
-
-		try {
-			tray.add(trayIcon);
-		} catch (AWTException e) {
-			log.error("TrayIcon could not be added.");
-		}
 	}
 }
