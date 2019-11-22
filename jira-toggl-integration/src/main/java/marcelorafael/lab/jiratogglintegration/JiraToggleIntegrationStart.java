@@ -27,7 +27,7 @@ public class JiraToggleIntegrationStart {
 		JiraConfiguration.PASSWORD = ConfigurationProperties.get("jira.password");
 
 		IntegrationService integrationService = new IntegrationService();
-		integrationService.doIntegration();
+		integrationService.executeIntegration();
 
 		/*TogglEntriesService togglEntriesServices = new TogglEntriesService();
 		List<TimeEntries> timeEntries = togglEntriesServices.getTimeEntries(LocalDateTime.of(2019, Month.NOVEMBER, 20, 0, 0));*/

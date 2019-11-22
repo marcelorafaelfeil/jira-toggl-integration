@@ -20,6 +20,18 @@ import java.util.List;
 @Slf4j
 public class IntegrationService {
 	private final String SINCE = ConfigurationProperties.get("toggl.since");
+	private final String REFRESH_TIME = ConfigurationProperties.get("integration.refresh-time");
+
+	public void executeIntegration() {
+		LocalDateTime timeToRefresh = LocalDateTime.now();
+		while(true) {
+			if (timeToRefresh.isBefore(LocalDateTime.now())) {
+				this.doIntegration();
+
+				timeToRefresh = timeToRefresh.plus(TemporalUtil.getTimeOfUnit(REFRESH_TIME), TemporalUtil.getUnit(REFRESH_TIME));
+			}
+		}
+	}
 
 	public void doIntegration() {
 		TogglEntriesService togglEntriesService = new TogglEntriesService();

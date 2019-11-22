@@ -42,7 +42,7 @@ public class TogglCore {
 
 	private void processRequest() {
 		try {
-			log.info("Executando comando [command={}]", this.command);
+			log.debug("Executando comando [command={}]", this.command);
 			Process process = Runtime.getRuntime().exec(this.command);
 
 			this.processReturn(process.getInputStream());

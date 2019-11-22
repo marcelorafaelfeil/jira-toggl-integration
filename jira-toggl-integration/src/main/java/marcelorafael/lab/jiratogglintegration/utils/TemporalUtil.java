@@ -12,7 +12,9 @@ import java.util.Date;
 @Slf4j
 public class TemporalUtil {
 	public static ChronoUnit getUnit(String time) {
-		if (time.endsWith("m")) {
+		if (time.endsWith("s")) {
+			return ChronoUnit.SECONDS;
+		} else if (time.endsWith("m")) {
 			return ChronoUnit.MINUTES;
 		} else if(time.endsWith("h")) {
 			return ChronoUnit.HOURS;
@@ -41,7 +43,6 @@ public class TemporalUtil {
 		String zdtString = zonedDateTime.format(formatter);
 		String ldtString = localDateTime.format(formatter);
 
-		log.info("EQUALS => [{} = {}]", zdtString, ldtString);
 		return zdtString.equals(ldtString);
 	}
 
@@ -50,7 +51,13 @@ public class TemporalUtil {
 		String zdtString = zonedDateTime.format(formatter);
 		String ldtString = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).format(formatter);
 
-		log.info("EQUALS => [{} = {}]", zdtString, ldtString);
 		return zdtString.equals(ldtString);
 	}
+
+	public static Boolean equalsLocalDateTime(LocalDateTime localDateTime, LocalDateTime localDateTime2) {
+		localDateTime = localDateTime.withNano(0);
+		localDateTime2 = localDateTime2.withNano(0);
+		return localDateTime.equals(localDateTime2);
+	}
+
 }
